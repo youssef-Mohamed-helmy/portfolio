@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Youssef Helmy — Vulnerability Analyst</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+:root{
+  --bg:#0D1117;
+  --surface:#141922;
+  --surface-2:#1B222D;
+  --border:#242C38;
+  --text:#C9D1D9;
+  --text-dim:#7D8798;
+  --text-bright:#F0F3F7;
+  --accent:#2DD4BF;
+  --accent-dim:rgba(45,212,191,0.12);
+  --sev-info:#4B9FE1;
+  --sev-low:#5FC28A;
+  --sev-med:#E3B341;
+  --sev-high:#E08A3C;
+  --sans:'IBM Plex Sans',sans-serif;
+  --mono:'IBM Plex Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--sans);
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--accent);text-decoration:none;}
+a:hover{text-decoration:underline;}
+::selection{background:rgba(45,212,191,0.25);}
+
+.wrap{max-width:960px;margin:0 auto;padding:0 28px;}
+
+/* ── NAV ─────────────────────────────── */
+nav{
+  position:sticky;top:0;z-index:50;
+  background:rgba(13,17,23,.92);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--border);
+}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:56px;}
+.nav-id{font-family:var(--mono);font-size:13.5px;color:var(--text-bright);}
+.nav-links{display:flex;gap:26px;font-family:var(--mono);font-size:12.5px;}
+.nav-links a{color:var(--text-dim);}
+.nav-links a:hover{color:var(--accent);text-decoration:none;}
+@media(max-width:600px){.nav-links{display:none;}}
+
+/* ── HERO ────────────────────────────── */
+.hero{padding:80px 0 60px;border-bottom:1px solid var(--border);}
+.hero-ping{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--mono);font-size:12.5px;color:var(--sev-low);
+  margin-bottom:22px;
+}
+.ping-dot{width:7px;height:7px;border-radius:50%;background:var(--sev-low);animation:pulse 2s ease infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.45;}}
+h1{
+  font-size:clamp(30px,5vw,44px);font-weight:700;
+  color:var(--text-bright);letter-spacing:-0.02em;
+  max-width:16ch;margin-bottom:14px;
+}
+.hero-tagline{font-size:17px;color:var(--text-dim);max-width:52ch;margin-bottom:28px;}
+.hero-contact{display:flex;flex-wrap:wrap;gap:8px 20px;font-family:var(--mono);font-size:12.5px;color:var(--text-dim);}
+.hero-contact a{color:var(--text-dim);}
+.hero-contact a:hover{color:var(--accent);}
+
+/* ── SHARED SECTION ──────────────────── */
+section{padding:54px 0;border-bottom:1px solid var(--border);}
+section:last-of-type{border-bottom:none;}
+.sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:30px;}
+.sec-num{font-family:var(--mono);font-size:12px;color:var(--text-dim);}
+h2{font-size:21px;font-weight:600;color:var(--text-bright);}
+.sec-note{font-size:14px;color:var(--text-dim);margin-top:-18px;margin-bottom:28px;max-width:58ch;}
+
+/* ── WHAT I DO (services) ────────────── */
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;}
+.svc{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:8px;padding:22px;
+  transition:border-color .18s;
+}
+.svc:hover{border-color:var(--accent);}
+.svc-icon{font-size:22px;margin-bottom:10px;}
+.svc-title{font-weight:600;color:var(--text-bright);font-size:15px;margin-bottom:6px;}
+.svc-desc{font-size:13.5px;color:var(--text-dim);}
+
+/* ── EXPERIENCE TIMELINE ─────────────── */
+.exp-item{
+  display:grid;grid-template-columns:9px 1fr;gap:0 20px;
+  padding-bottom:28px;position:relative;
+}
+.exp-item:last-child{padding-bottom:0;}
+.exp-dot-col{display:flex;flex-direction:column;align-items:center;}
+.exp-dot{width:9px;height:9px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:5px;}
+.exp-line{width:1px;background:var(--border);flex:1;margin-top:6px;}
+.exp-item:last-child .exp-line{display:none;}
+.exp-dates{font-family:var(--mono);font-size:11.5px;color:var(--text-dim);margin-bottom:3px;}
+.exp-role{font-weight:600;color:var(--text-bright);font-size:15px;}
+.exp-org{font-size:13px;color:var(--accent);margin-bottom:6px;}
+.exp-body{font-size:13.5px;color:var(--text);}
+.exp-body ul{margin-left:16px;margin-top:4px;}
+.exp-body li{margin-bottom:3px;}
+.badge{
+  display:inline-block;font-family:var(--mono);font-size:10px;
+  padding:2px 7px;border-radius:3px;margin-left:8px;vertical-align:middle;
+}
+.badge-prog{background:rgba(227,179,65,.14);color:var(--sev-med);}
+.badge-done{background:rgba(95,194,138,.14);color:var(--sev-low);}
+
+/* ── PROJECTS ────────────────────────── */
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;}
+.proj{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:8px;padding:20px;
+  display:flex;flex-direction:column;gap:10px;
+}
+.proj-header{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+.proj-title{font-weight:600;color:var(--text-bright);font-size:14.5px;}
+.tag{
+  font-family:var(--mono);font-size:10px;font-weight:600;
+  padding:2px 8px;border-radius:3px;white-space:nowrap;height:fit-content;
+}
+.tag-sec{background:rgba(224,138,60,.14);color:var(--sev-high);}
+.tag-net{background:rgba(75,159,225,.14);color:var(--sev-info);}
+.tag-dev{background:rgba(95,194,138,.14);color:var(--sev-low);}
+.proj-desc{font-size:13.5px;color:var(--text);flex:1;}
+.proj-stack{font-family:var(--mono);font-size:11.5px;color:var(--text-dim);}
+
+/* ── TERMINAL SNIPPETS ───────────────── */
+.term{
+  background:#090C10;border:1px solid var(--border);border-radius:6px;
+  padding:13px 15px;font-family:var(--mono);font-size:12px;
+  color:#8FE3A0;overflow-x:auto;white-space:pre;line-height:1.55;
+  margin-top:10px;
+}
+.term .dim{color:#4A5460;}
+.term .warn{color:var(--sev-med);}
+
+/* ── CERTS GRID ──────────────────────── */
+.certs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;}
+.cert{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:8px;padding:16px;
+}
+.cert-issuer{font-family:var(--mono);font-size:10.5px;color:var(--accent);margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em;}
+.cert-name{font-size:13.5px;font-weight:600;color:var(--text-bright);margin-bottom:3px;}
+.cert-date{font-family:var(--mono);font-size:11px;color:var(--text-dim);}
+
+/* ── STATS ───────────────────────────── */
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;}
+.stat{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:8px;padding:18px;text-align:center;
+}
+.stat-n{font-family:var(--mono);font-size:24px;color:var(--accent);font-weight:600;}
+.stat-l{font-size:12px;color:var(--text-dim);margin-top:4px;}
+
+/* ── SKILLS ──────────────────────────── */
+.skills-block{display:flex;flex-direction:column;gap:14px;}
+.sk-row{display:flex;align-items:flex-start;gap:14px;flex-wrap:wrap;}
+.sk-label{font-family:var(--mono);font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.05em;width:100px;flex-shrink:0;padding-top:5px;}
+.chips{display:flex;flex-wrap:wrap;gap:7px;}
+.chip{
+  font-family:var(--mono);font-size:12px;
+  padding:4px 10px;border:1px solid var(--border);
+  border-radius:4px;color:var(--text);background:var(--surface);
+}
+
+/* ── CONTACT ─────────────────────────── */
+.contact-row{display:flex;flex-wrap:wrap;gap:12px;}
+.cta{
+  font-family:var(--mono);font-size:13px;
+  border:1px solid var(--border);border-radius:6px;
+  padding:10px 17px;color:var(--text);
+  display:flex;align-items:center;gap:7px;
+  transition:border-color .15s,color .15s;
+}
+.cta:hover{border-color:var(--accent);color:var(--accent);text-decoration:none;}
+.cta-primary{background:var(--accent-dim);border-color:var(--accent);color:var(--accent);}
+
+footer{
+  text-align:center;padding:28px 0;
+  font-family:var(--mono);font-size:11.5px;color:var(--text-dim);
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="wrap">
+    <span class="nav-id">youssef@helmy ~</span>
+    <div class="nav-links">
+      <a href="#services">services</a>
+      <a href="#experience">experience</a>
+      <a href="#projects">projects</a>
+      <a href="#certs">certs</a>
+      <a href="#ctf">ctf</a>
+      <a href="#contact">contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-ping"><span class="ping-dot"></span>Open to internships &amp; junior analyst roles — Cairo, Egypt</div>
+    <h1>Youssef Mohamed Helmy</h1>
+    <p class="hero-tagline">Vulnerability Analyst in training. I find what's broken, document it precisely, and explain what needs to change — then I make sure the attack surface is smaller than I found it.</p>
+    <div class="hero-contact">
+      <a href="mailto:mphamedyoussef861@gmail.com">mphamedyoussef861@gmail.com</a>
+      <span>+20 127 358 6143</span>
+      <a href="https://linkedin.com/in/youssef-mohamed-helmy" target="_blank">LinkedIn</a>
+      <a href="https://github.com/youssef-Mohamed-helmy" target="_blank">GitHub</a>
+    </div>
+  </div>
+</header>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">01</span><h2>What I Offer</h2></div>
+    <p class="sec-note">Practical security work I can deliver right now — scoped for lab environments and supervised assessments.</p>
+    <div class="services-grid">
+      <div class="svc">
+        <div class="svc-icon">🔍</div>
+        <div class="svc-title">Network Reconnaissance &amp; Enumeration</div>
+        <div class="svc-desc">Structured Nmap scanning (service/version/OS detection), traffic analysis with Wireshark, and attack-surface mapping across open ports and services.</div>
+      </div>
+      <div class="svc">
+        <div class="svc-icon">🛡️</div>
+        <div class="svc-title">Vulnerability Assessment &amp; Reporting</div>
+        <div class="svc-desc">Authenticated Nessus scans, WPScan web audits, CVSS severity classification, and professional remediation reports with prioritised findings.</div>
+      </div>
+      <div class="svc">
+        <div class="svc-icon">🌐</div>
+        <div class="svc-title">Network Design &amp; Hardening</div>
+        <div class="svc-desc">VLAN segmentation, extended ACL policy writing, and firewall rule validation — using Cisco Packet Tracer for prototype and verification.</div>
+      </div>
+      <div class="svc">
+        <div class="svc-icon">🤖</div>
+        <div class="svc-title">Security Automation &amp; Tooling</div>
+        <div class="svc-desc">Python scripts for data processing, PDF report generation, and API-driven workflows. Mobile development with React Native and Firebase.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">02</span><h2>Training &amp; Experience</h2></div>
+
+    <div class="exp-item">
+      <div class="exp-dot-col"><div class="exp-dot"></div><div class="exp-line"></div></div>
+      <div>
+        <div class="exp-dates">Jul – Sep 2026 &nbsp;<span class="badge badge-prog">IN PROGRESS</span></div>
+        <div class="exp-role">Vulnerability Assessment &amp; Penetration Testing Trainee</div>
+        <div class="exp-org">Digital Egypt Pioneers Initiative (DEPI) · AMIT Learning</div>
+        <div class="exp-body">
+          <ul>
+            <li>Hands-on web application pentesting — reconnaissance through exploitation using Nmap, Metasploit, Burp Suite, Hydra, and WPScan.</li>
+            <li>Produced professional vulnerability assessment reports with CVSS scoring and remediation plans.</li>
+            <li>Delivered a client-facing penetration testing proposal (scope, rules of engagement, disclosure terms) to a mock corporate audience in English.</li>
+            <li>Presented "The Illusion of Security" — a SOC mindset and assume-breach framework briefing covering SIEM event correlation and Sigma detection rules.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-dot-col"><div class="exp-dot"></div><div class="exp-line"></div></div>
+      <div>
+        <div class="exp-dates">2026 &nbsp;<span class="badge badge-done">COMPLETED</span></div>
+        <div class="exp-role">Penetration Testing &amp; Application Security</div>
+        <div class="exp-org">National Telecommunication Institute (NTI) · EG|CERT · NTRA — Cybersecurity Academy (Undergraduate Level)</div>
+        <div class="exp-body">
+          60-hour technical program covering penetration testing methodology, application security fundamentals, network pivoting, and perimeter scanning — delivered under the NTI Cybersecurity Academy with technology partners Fortinet &amp; Cisco.
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-dot-col"><div class="exp-dot"></div><div class="exp-line"></div></div>
+      <div>
+        <div class="exp-dates">2026 &nbsp;<span class="badge badge-done">COMPLETED</span></div>
+        <div class="exp-role">HCIA Security &amp; Datacom Training</div>
+        <div class="exp-org">ICT Academy (Huawei) · National Telecommunication Institute (NTI)</div>
+        <div class="exp-body">
+          Network infrastructure security, routing/switching protocols, and enterprise network design principles aligned with the Huawei HCIA-Security track.
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-dot-col"><div class="exp-dot"></div><div class="exp-line"></div></div>
+      <div>
+        <div class="exp-dates">Aug 2026 &nbsp;<span class="badge badge-done">COMPLETED</span></div>
+        <div class="exp-role">Banking IT &amp; Systems Summer Trainee</div>
+        <div class="exp-org">Commercial International Bank (CIB)</div>
+        <div class="exp-body">
+          Financial infrastructure overview, enterprise operational workflows, and IT security controls in a regulated banking environment.
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-dot-col"><div class="exp-dot"></div><div class="exp-line"></div></div>
+      <div>
+        <div class="exp-dates">2023 – Present</div>
+        <div class="exp-role">B.Sc. Computer Science &amp; Mathematics</div>
+        <div class="exp-org">Faculty of Science, Cairo University · Expected 2028</div>
+        <div class="exp-body">
+          3rd year. Core focus on algorithms, distributed systems, operating systems, software engineering, and applied mathematics. Active participant in ECPC competitive programming.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">03</span><h2>Technical Projects</h2></div>
+    <div class="proj-grid">
+
+      <div class="proj">
+        <div class="proj-header">
+          <div class="proj-title">Metasploitable2 — Enumeration &amp; Manual Exploitation</div>
+          <span class="tag tag-sec">SECURITY</span>
+        </div>
+        <div class="proj-desc">
+          Full Nmap service/OS scan (20+ exposed services including anonymous FTP, weak-auth Telnet, and exposed MySQL). Used a Metasploit auxiliary module to fingerprint Telnet, then established an authenticated session via discovered default credentials.
+        </div>
+        <div class="term"><span class="dim">$ nmap -sV -sC -O 192.168.206.142</span>
+21/tcp  open  ftp    vsftpd 2.3.4
+<span class="warn">|_ftp-anon: Anonymous FTP login allowed</span>
+23/tcp  open  telnet Linux telnetd
+3306/tcp open mysql  MySQL 5.0.51a
+msfadmin@metasploitable:~$</div>
+        <div class="proj-stack">nmap · metasploit · wireshark · hydra</div>
+      </div>
+
+      <div class="proj">
+        <div class="proj-header">
+          <div class="proj-title">Credentialed Vulnerability &amp; Patch Audit</div>
+          <span class="tag tag-sec">SECURITY</span>
+        </div>
+        <div class="proj-desc">
+          End-to-end authenticated Nessus scan against a Windows target: staged remote access via registry modifications, executed malware scan (0 findings — host clean) and patch audit, then fully reversed every configuration change post-assessment.
+        </div>
+        <div class="proj-stack">nessus essentials · windows registry · credentialed scanning</div>
+      </div>
+
+      <div class="proj">
+        <div class="proj-header">
+          <div class="proj-title">WordPress Security Assessment</div>
+          <span class="tag tag-sec">SECURITY</span>
+        </div>
+        <div class="proj-desc">
+          Simulated audit against a WordPress environment: enumerated users, plugins, and themes with WPScan (API token integration), mapped identified CVEs to installed components, and produced a structured remediation report.
+        </div>
+        <div class="proj-stack">wpscan · owasp top 10 · vulnerability reporting</div>
+      </div>
+
+      <div class="proj">
+        <div class="proj-header">
+          <div class="proj-title">Segmented Network — VLANs &amp; Extended ACLs</div>
+          <span class="tag tag-net">NETWORK</span>
+        </div>
+        <div class="proj-desc">
+          Designed a two-VLAN enterprise topology (HR / IT) with a DMZ server farm. Wrote and enforced an extended ACL permitting SSH only from the IT subnet — verified via match counters.
+        </div>
+        <div class="term"><span class="dim">Router(config)# access-list 101 permit tcp</span>
+<span class="dim">  192.168.20.0 0.0.0.255 any eq 22</span>
+<span class="dim">Router# show access-lists 101</span>
+  10 permit ... (4 matches)
+  20 deny ip any any log (12 matches)</div>
+        <div class="proj-stack">cisco packet tracer · vlans · acls</div>
+      </div>
+
+      <div class="proj">
+        <div class="proj-header">
+          <div class="proj-title">Attendance &amp; Grades System</div>
+          <span class="tag tag-dev">DEV</span>
+        </div>
+        <div class="proj-desc">
+          Co-developed a mobile app with Bassam, Fathy, Mahmoud, and Ahmed Reda for student attendance and grade management. Handled a GitHub secret-scanning alert: revoked exposed Firebase credentials, isolated environment configs, hardened .gitignore.
+        </div>
+        <div class="proj-stack">react native · expo · firebase · secret remediation</div>
+      </div>
+
+      <div class="proj">
+        <div class="proj-header">
+          <div class="proj-title">Telegram PDF Summarizer Bot</div>
+          <span class="tag tag-dev">DEV</span>
+        </div>
+        <div class="proj-desc">
+          Python Telegram bot that retrieves PDFs sent by users, parses them, and returns an LLM-generated summary — handling async request lifecycles and Groq API integration end to end.
+        </div>
+        <div class="proj-stack">python · groq api · pdf parsing · async</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CERTS -->
+<section id="certs">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">04</span><h2>Certifications &amp; Courses</h2></div>
+    <div class="certs-grid">
+      <div class="cert">
+        <div class="cert-issuer">Cisco</div>
+        <div class="cert-name">CCNA — Network Associate</div>
+        <div class="cert-date">Completed Jul 2026</div>
+      </div>
+      <div class="cert">
+        <div class="cert-issuer">Cisco Networking Academy</div>
+        <div class="cert-name">Introduction to Cybersecurity</div>
+        <div class="cert-date">Completed Aug 2026 · TCSC Arab Open University</div>
+      </div>
+      <div class="cert">
+        <div class="cert-issuer">NTI · EG|CERT · NTRA</div>
+        <div class="cert-name">Penetration Testing &amp; Application Security</div>
+        <div class="cert-date">Completed 2026 · Cybersecurity Academy (Undergraduate Level) · 60 technical hrs</div>
+      </div>
+      <div class="cert">
+        <div class="cert-issuer">Huawei / ICT Academy</div>
+        <div class="cert-name">HCIA Security &amp; Datacom</div>
+        <div class="cert-date">Completed 2026 · via NTI</div>
+      </div>
+      <div class="cert">
+        <div class="cert-issuer">Oracle</div>
+        <div class="cert-name">AI for You</div>
+        <div class="cert-date">Completed Aug 2026</div>
+      </div>
+      <div class="cert">
+        <div class="cert-issuer">Coursera</div>
+        <div class="cert-name">Cybersecurity: Attack &amp; Defense Fundamentals</div>
+        <div class="cert-date">In progress</div>
+      </div>
+      <div class="cert">
+        <div class="cert-issuer">Coursera / EC-Council</div>
+        <div class="cert-name">CEH v.12 — Ethical Hacker</div>
+        <div class="cert-date">In progress</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTF -->
+<section id="ctf">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">05</span><h2>Practice &amp; Competitions</h2></div>
+    <div class="stats-row">
+      <div class="stat"><div class="stat-n">Silver</div><div class="stat-l">TryHackMe League</div></div>
+      <div class="stat"><div class="stat-n">336</div><div class="stat-l">TryHackMe Points</div></div>
+      <div class="stat"><div class="stat-n">5-day</div><div class="stat-l">Streak badge</div></div>
+      <div class="stat"><div class="stat-n">H.M.</div><div class="stat-l">ECPC 2026 · ICPC</div></div>
+      <div class="stat"><div class="stat-n">HTB</div><div class="stat-l">Active on HackTheBox</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">06</span><h2>Toolset</h2></div>
+    <div class="skills-block">
+      <div class="sk-row">
+        <div class="sk-label">Security</div>
+        <div class="chips">
+          <span class="chip">Kali Linux</span><span class="chip">Nmap</span>
+          <span class="chip">Metasploit</span><span class="chip">Burp Suite</span>
+          <span class="chip">Nessus</span><span class="chip">WPScan</span>
+          <span class="chip">Wireshark</span><span class="chip">Hydra</span>
+        </div>
+      </div>
+      <div class="sk-row">
+        <div class="sk-label">Networking</div>
+        <div class="chips">
+          <span class="chip">Cisco Packet Tracer</span><span class="chip">VLANs</span>
+          <span class="chip">ACLs</span><span class="chip">OSPF</span>
+          <span class="chip">NAT/PAT</span><span class="chip">TCP/IP</span>
+        </div>
+      </div>
+      <div class="sk-row">
+        <div class="sk-label">Code</div>
+        <div class="chips">
+          <span class="chip">Python</span><span class="chip">Java</span>
+          <span class="chip">C++</span><span class="chip">JavaScript</span>
+          <span class="chip">React Native</span>
+        </div>
+      </div>
+      <div class="sk-row">
+        <div class="sk-label">Infra</div>
+        <div class="chips">
+          <span class="chip">VMware</span><span class="chip">VirtualBox</span>
+          <span class="chip">Git / GitHub</span>
+          <span class="chip">Firebase</span>
+        </div>
+      </div>
+      <div class="sk-row">
+        <div class="sk-label">Languages</div>
+        <div class="chips">
+          <span class="chip">Arabic — Native</span>
+          <span class="chip">English — C1</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">07</span><h2>Get in Touch</h2></div>
+    <p class="sec-note">Open to internships, junior analyst positions, and supervised assessment work.</p>
+    <div class="contact-row">
+      <a class="cta cta-primary" href="mailto:mphamedyoussef861@gmail.com">✉ Email me</a>
+      <a class="cta" href="https://linkedin.com/in/youssef-mohamed-helmy" target="_blank">in LinkedIn</a>
+      <a class="cta" href="https://github.com/youssef-Mohamed-helmy" target="_blank">⌥ GitHub</a>
+    </div>
+  </div>
+</section>
+
+<footer>Youssef Mohamed Helmy · Cairo, Egypt · mphamedyoussef861@gmail.com</footer>
+
+</body>
+</html>
